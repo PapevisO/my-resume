@@ -1,6 +1,6 @@
-# My Resume
+# Resume
 
-> Everyone has a right to one, and this is mine :smile:
+Forked the repo
 
 I found it amazing to maintain my resume over Github, which is versioned and easy to maintain. You can download multiple flavours of it visiting this [address](https://aajiwani.github.io/my-resume/) -- Don't worry the link is hoted on Github pages (safe to visit).
 
