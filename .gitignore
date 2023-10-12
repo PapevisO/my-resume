@@ -105,3 +105,6 @@ dist
 
 # A necessary evil
 public/index.html
+
+# refer to resume.example.json
+resume.json
