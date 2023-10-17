@@ -23,22 +23,24 @@ JSON_PATH="$MOUNTPOINT/resume.json"
 CURRENT_DATE=$(date +%s)
 JSON_DATE=$(date -d $(stat -c %y "$JSON_PATH" 2>/dev/null) +%s 2>/dev/null)
 
-# If resume.json's date is in the future
+# Validate if resume.json's date is not set in the future
 if [ $JSON_DATE -gt $CURRENT_DATE ]; then
     DAYS_DIFFERENCE=$(( (JSON_DATE - CURRENT_DATE) / 86400 )) # Convert seconds difference to days
     echo "Warning: The date of resume.json ($(date -d @$JSON_DATE)) is $DAYS_DIFFERENCE days ahead of the current date ($(date -d @$CURRENT_DATE)). Not processing."
 else
     # Rebuild PDF if it's missing or if resume.json is newer than resume.pdf
     if [ ! -f "$PDF_PATH" ] || [ "$JSON_PATH" -nt "$PDF_PATH" ]; then
-        # Add the logic/command to rebuild the PDF here
+        # Use the npm script to rebuild the PDF
         echo "Rebuilding PDF..."
+        npm run export-pdf-theme -- --theme $THEME_VALUE --dir $MOUNTPOINT
+        echo "Rebuilding HTML..."
+        npm run export-html-theme -- --theme $THEME_VALUE --dir $MOUNTPOINT
     fi
 fi
 
-# Run the node command with the determined directory
-node \
-    /usr/app/node_modules/resume-cli/build/main.js \
-    serve \
+# Serve the resume using the appropriate theme
+npm run serve-theme \
+    -- \
     --theme $THEME_VALUE \
     --silent \
     --dir $MOUNTPOINT
