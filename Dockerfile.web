@@ -1,0 +1,4 @@
+FROM registry.papievis.com/my-resume:latest	
+ENV THEME_VALUE=paper
+EXPOSE 4000
+ENTRYPOINT ["./entrypoint-web.sh"]

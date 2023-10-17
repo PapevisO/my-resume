@@ -1,11 +1,61 @@
 version: '3'
 
+x-web: &web
+  image: registry.papievis.com/my-resume-web:latest
+  volumes:
+    - .:/usr/app/
+    - /usr/app/node_modules
+  # tty: true
+  networks:
+    - local-proxy
+
 services:
-  web:
-    build: .
-    volumes:
-      - .:/usr/app/
-      - /usr/app/node_modules
-    tty: true
+  paper:
+    <<: *web
+    environment:
+      - THEME_VALUE=paper
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.paper.rule=Host(`paper.local`)"
+      - "traefik.http.services.paper-service.loadbalancer.server.port=4000"
+      - "traefik.http.routers.paper.service=paper-service"
+      - "traefik.http.routers.paper.entrypoints=websecure"
+      - "traefik.http.routers.paper.tls=true"
+      - "traefik.http.routers.paper.tls.certresolver=default-resolver"
+
+  kendall:
+    <<: *web
+    environment:
+      - THEME_VALUE=kendall
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.kendall.rule=Host(`kendall.local`)"
+      - "traefik.http.services.kendall-service.loadbalancer.server.port=4000"
+      - "traefik.http.routers.kendall.service=kendall-service"
+      - "traefik.http.routers.kendall.entrypoints=websecure"
+      - "traefik.http.routers.kendall.tls=true"
+      - "traefik.http.routers.kendall.tls.certresolver=default-resolver"
+
+  stackoverflow:
+    <<: *web
+    environment:
+      - THEME_VALUE=stackoverflow
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.kendall.rule=Host(`kendall.local`)"
+      - "traefik.http.services.kendall-service.loadbalancer.server.port=4000"
+      - "traefik.http.routers.kendall.service=kendall-service"
+      - "traefik.http.routers.kendall.entrypoints=websecure"
+      - "traefik.http.routers.kendall.tls=true"
+      - "traefik.http.routers.kendall.tls.certresolver=default-resolver"
+
+  current:
+    <<: *web
+    environment:
+      - THEME_VALUE=spartan
     ports:
-      - "4000"
+      - 4000:4000
+
+networks:
+  local-proxy:
+    external: true
