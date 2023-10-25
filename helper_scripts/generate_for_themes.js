@@ -29,8 +29,8 @@ const themesToLoad = [
 // Generate theme based static and pdf resumes
 for (let i = 0; i < themesToLoad.length; i++) {
     let commands = [
-        `node node_modules/resume-cli/build/main.js export ${themesToLoad[i]}.html --format html --theme ${themesToLoad[i]}`,
-        `node node_modules/resume-cli/build/main.js export ${themesToLoad[i]}.pdf --format pdf --theme ${themesToLoad[i]}`,
+        `node node_modules/resume-cli/build/main.js export public/${themesToLoad[i]}.html --format html --theme ${themesToLoad[i]}`,
+        `node node_modules/resume-cli/build/main.js export public/${themesToLoad[i]}.pdf --format pdf --theme ${themesToLoad[i]}`,
         `node helper_scripts/add_download_resume_link.js ${themesToLoad[i]}.html ./${themesToLoad[i]}.pdf`
     ];
 

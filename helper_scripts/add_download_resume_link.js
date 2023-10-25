@@ -8,8 +8,8 @@ var myArgs = process.argv.slice(2);
 console.log('myArgs: ', myArgs);
 
 // Prepares the input file path and output file path
-const inFileName = path.join(__dirname, '../', myArgs[0]);
-const outFileName = path.join(__dirname, '../', 'out_' + myArgs[0]);
+const inFileName = path.join(__dirname, '../public/', myArgs[0]);
+const outFileName = path.join(__dirname, '../public/', 'out_' + myArgs[0]);
 const pdfResumePath = myArgs[1];
 
 // Reads the input file to start the manipulation
