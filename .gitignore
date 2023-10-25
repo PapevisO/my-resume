@@ -105,6 +105,8 @@ dist
 
 # A necessary evil
 public/index.html
+public/*
+!public/.gitkeep
 
 # refer to resume.example.json
 resume.json
